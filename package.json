@@ -1,0 +1,31 @@
+{
+  "name": "api.krakowguideshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "env TZ=UTC NODE_ENV=development nodemon index --ignore 'tmp/'",
+    "lint": "eslint index.js",
+    "start-dev": "pm2 restart ecosystem.config.js --env development",
+    "start-prod": "pm2 restart ecosystem.config.js --env production",
+    "prod": "ssh -i '../fotami-keypair-eu.pem' ec2-user@ec2-54-78-181-202.eu-west-1.compute.amazonaws.com",
+    "sync": "npm run upload-prod-src && scp -i '../fotami-keypair-eu.pem' config.js ecosystem.config.js config.env.production.js index.js consts.js config.aws.env.production.json README.txt package.json nodemon.json package-lock.json ec2-user@ec2-54-78-181-202.eu-west-1.compute.amazonaws.com:~/",
+    "upload-prod-src": "scp -i '../fotami-keypair-eu.pem' -r ./src ec2-user@ec2-54-78-181-202.eu-west-1.compute.amazonaws.com:~/",
+    "prod-restart": "ssh -i '../fotami-keypair-eu.pem' ec2-user@ec2-54-78-181-202.eu-west-1.compute.amazonaws.com -t 'npm i && npm run start-prod'",
+    "test": "",
+    "git": "git add . && git commit -m 'f' && git push origin main"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1499.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "eslint-config-airbnb": "^19.0.4",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "nanoid": "^5.0.3",
+    "node-fetch": "^3.3.2",
+    "uuid": "^9.0.1"
+  }
+}
